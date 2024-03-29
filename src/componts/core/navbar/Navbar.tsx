@@ -1,9 +1,42 @@
 'use client'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletMultiButton, WalletDisconnectButton, } from '@solana/wallet-adapter-react-ui';
 
 const Navbar = () => {
+    const { wallet, connect, disconnect, select } = useWallet();
+
+    useEffect(() => {
+        autoConnect()
+    }, [])
+
+    const autoConnect = async () => {
+        console.log(wallet);
+    }
+
+    const handleConnect = async () => {
+        console.log(wallet);
+        select(wallet?.adapter.name || null)
+        try {
+            await connect();
+        } catch (error) {
+            // console.error('Error connecting wallet:', error);
+            console.log("error")
+        }
+    };
+
+    const getProvider = () => {
+        if ("solana" in window) {
+          const provider = (window as any).solana;
+          if (provider.isPhantom) {
+            return provider;
+          }
+        }
+        window.open("https://phantom.app/", "_blank");
+    };
+
     const pathname = usePathname()
     return (
         <Box bg='white' w='100%' display='flex' boxShadow="0 9px 10px -5px rgba(0, 0, 0, 0.2)">
@@ -15,7 +48,7 @@ const Navbar = () => {
                     <u>USER / {pathname === '/' ? 'Home' : pathname}</u>
                 </Text>
                 <Flex alignItems='center' gap='24px'>
-                    <Button
+                    {/* <Button
                         px='20px'
                         color='white'
                         fontSize='16px'
@@ -23,9 +56,12 @@ const Navbar = () => {
                         borderRadius='40px'
                         fontWeight='normal'
                         _hover={{ color: 'white' }}
+                        onClick={handleConnect}
                     >
                         CONNECT WALLET
-                    </Button>
+                    </Button> */}
+
+                    <WalletMultiButton style={{background: "#215ED7", borderRadius: '40px'}}/>
                     <Image
                         w='30px'
                         h='30px'
