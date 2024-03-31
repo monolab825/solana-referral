@@ -12,7 +12,7 @@ const Navbar = () => {
             </Box>
             <Flex h='96px' w='100%' alignItems='center' justifyContent='space-between' px='40px'>
                 <Text fontSize='18px' >
-                    <u>USER / {pathname === '/' ? 'Home' : pathname}</u>
+                    <u>USER  {pathname === '/' ? '/ Home' : pathname}</u>
                 </Text>
                 <Flex alignItems='center' gap='24px'>
                     <Button
