@@ -17,7 +17,7 @@ const PackageDetailsMain = () => {
                     <Sidebar />
                 </Box>
                 <Box>
-                    <Box p='20px'>
+                    <Box p='30px'>
                         <PackageDetails />
                     </Box>
                 </Box>
