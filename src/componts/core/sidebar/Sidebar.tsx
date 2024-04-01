@@ -11,12 +11,12 @@ const Sidebar = () => {
     const pathname = usePathname()
     const SideBarItems = [
         { icon: <IoHome />, label: 'HOME', path: '/' },
-        { icon: <LuLineChart />, label: 'Referrals Activity', path: '/referrals' },
-        { icon: <TbPackages />, label: 'Packages', path: '/packages' },
+        { icon: <LuLineChart />, label: 'Referrals Activity', path: '/referral-activity' },
+        { icon: <TbPackages />, label: 'Packages', path: (pathname === '/packages/details') ? '/packages/details' : '/packages' },
         { icon: <RiWallet3Fill />, label: 'Credits', path: '/credits' },
     ];
     return (
-        <div>
+        <>
             {SideBarItems.map((item, index) =>
                 <SidebarItem
                     key={index}
@@ -26,7 +26,7 @@ const Sidebar = () => {
                     active={pathname === item.path}
                 />
             )}
-        </div>
+        </>
     );
 };
 

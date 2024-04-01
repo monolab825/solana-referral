@@ -29,10 +29,6 @@ const HomeIndex = () => {
                             <HomeReuseCard cardTitle='My Credits' amount='0' showButton />
                         </Box>
                     </Box>
-                    <Box p='20px'>
-                        <Text my='50px' textAlign='center'>Packages start </Text>
-                        <Packages />
-                    </Box>
                 </Box>
             </Grid>
         </Box >
