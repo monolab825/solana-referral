@@ -79,18 +79,10 @@ const ReferralActivity = () => {
                     <Box w='100%' maxW='600px' border='1px solid #8AABED' boxShadow='0px 5px 0px #215ED7' p='30px' mb='40px' textTransform='uppercase'>
                         <Flex justifyContent='space-between' mb='50px'>
                             <Box>
-                                <Text fontSize='24px'>
+                                <Text fontSize='20px'>
                                     Total Commission
                                 </Text>
-                                <Text fontSize='56px'>
-                                    $100.00
-                                </Text>
-                            </Box>
-                            <Box>
-                                <Text fontSize='24px'>
-                                    Redeemed
-                                </Text>
-                                <Text fontSize='56px'>
+                                <Text fontSize='48px'>
                                     $100.00
                                 </Text>
                             </Box>
