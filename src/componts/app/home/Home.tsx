@@ -20,7 +20,7 @@ const HomeIndex = () => {
                     <Sidebar />
                 </Box>
                 <Box>
-                    <Box p='25px' display='flex' gap='30px'>
+                    <Box p='30px' display='flex' gap='30px'>
                         <TotalReferredSection />
                         <Box w='100%'>
                             <HomeReuseCard cardTitle='SOL Balance' amount='0.00' rate='~$0.00' />

@@ -22,17 +22,16 @@ const Navbar = () => {
         try {
             await connect();
         } catch (error) {
-            // console.error('Error connecting wallet:', error);
             console.log("error")
         }
     };
 
     const getProvider = () => {
         if ("solana" in window) {
-          const provider = (window as any).solana;
-          if (provider.isPhantom) {
-            return provider;
-          }
+            const provider = (window as any).solana;
+            if (provider.isPhantom) {
+                return provider;
+            }
         }
         window.open("https://phantom.app/", "_blank");
     };
@@ -61,7 +60,7 @@ const Navbar = () => {
                         CONNECT WALLET
                     </Button> */}
 
-                    <WalletMultiButton style={{background: "#215ED7", borderRadius: '40px'}}/>
+                    <WalletMultiButton style={{ background: "#215ED7", borderRadius: '40px' }} />
                     <Image
                         w='30px'
                         h='30px'

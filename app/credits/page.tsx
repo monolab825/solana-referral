@@ -1,3 +1,4 @@
+import Credits from '@/src/componts/app/credits/Credits';
 import Navbar from '@/src/componts/core/navbar/Navbar';
 import Sidebar from '@/src/componts/core/sidebar/Sidebar';
 import { Box, Grid } from '@chakra-ui/react';
@@ -15,9 +16,8 @@ const CreditsMain = () => {
                 <Box w='100%' maxW='332px' bg='#F5F5F5' pt='25px'>
                     <Sidebar />
                 </Box>
-                <Box>
-                    <Box p='20px'>
-                    </Box>
+                <Box p='30px'>
+                    <Credits />
                 </Box>
             </Grid>
         </Box >
