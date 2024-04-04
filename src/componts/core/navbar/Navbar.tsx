@@ -61,20 +61,7 @@ const Navbar = () => {
                     </Button> */}
 
                     <WalletMultiButton style={{ background: "#215ED7", borderRadius: '40px' }} />
-                    <Image
-                        w='30px'
-                        h='30px'
-                        display='inline'
-                        src='https://i.ibb.co/kqQ7FSG/notification-bing.png'
-                        alt='navbar-notification-icon'
-                    />
-                    <Image
-                        w='30px'
-                        h='30px'
-                        display='inline'
-                        src='https://i.ibb.co/ykGF8mq/sms-notification.png'
-                        alt='navbar-notification-icon'
-                    />
+
                     <Image
                         w='42px'
                         h='42px'
