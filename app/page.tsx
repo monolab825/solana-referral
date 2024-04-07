@@ -1,6 +1,6 @@
+import MainPage from '@/src/componts/app/main/mainPage';
 import React from 'react';
-import HomeIndex from '../src/componts/app/home/Home';
 
-const Home = () => <HomeIndex />
+const Home = () => <MainPage />
 
 export default Home;

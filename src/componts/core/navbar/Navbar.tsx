@@ -1,11 +1,10 @@
 'use client'
 import React, { useEffect } from 'react';
-import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
-import { usePathname } from 'next/navigation';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton, WalletDisconnectButton, } from '@solana/wallet-adapter-react-ui';
 
-const Navbar = () => {
+const Navbar = ({ pathname }: any) => {
     const { wallet, connect, disconnect, select } = useWallet();
 
     useEffect(() => {
@@ -36,15 +35,22 @@ const Navbar = () => {
         window.open("https://phantom.app/", "_blank");
     };
 
-    const pathname = usePathname()
     return (
         <Box bg='white' w='100%' display='flex' boxShadow="0 9px 10px -5px rgba(0, 0, 0, 0.2)">
             <Box h='96px' w='100%' maxW='332px' pt='18px' >
-                <Box w='53px' h='53px' ml='40px' mb='18px' borderRadius='40px' bg='#DEDEDE'></Box>
+                <Box w='53px' h='53px' ml='40px' mb='18px' borderRadius='40px' bg='#DEDEDE'>
+                    <Image src="https://i.ibb.co/ZhdBpK3/image-67.png" />
+                </Box>
             </Box>
             <Flex h='96px' w='100%' alignItems='center' justifyContent='space-between' px='40px'>
                 <Text fontSize='18px' >
-                    <u>USER  {pathname === '/' ? '/ Home' : pathname}</u>
+                    <u>USER
+                        {pathname === '/' && '/ Home'}
+                        {pathname === '/referral-activity' && '/ Referral Activity'}
+                        {pathname === '/packages' && '/ Packages'}
+                        {pathname === '/packages-details' && '/ Packages / Details'}
+                        {pathname === '/credits' && '/ Credits'}
+                    </u>
                 </Text>
                 <Flex alignItems='center' gap='24px'>
                     {/* <Button

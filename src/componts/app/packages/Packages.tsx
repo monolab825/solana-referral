@@ -1,8 +1,7 @@
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import Link from 'next/link';
 import React from 'react';
 
-const Packages = () => {
+const Packages = ({ setPathname }: any) => {
     const packageCards = [
         { packageName: 'BRONZE Plan', packageImage: 'https://i.ibb.co/db0w3zQ/Mask-group.png' },
         { packageName: 'GOLD Plan ', packageImage: 'https://i.ibb.co/db0w3zQ/Mask-group.png' },
@@ -31,15 +30,13 @@ const Packages = () => {
             </Text>
             <Box display='flex' flexWrap='wrap' gap='30px'>
                 {packageCards.map((card) =>
-                    <Box maxW='426px' w='100%' mx='auto' border='1px solid #8AABED' mb='20px' px='20px' py='15px' boxShadow='0px 5px 0px #215ED7'>
+                    <Box maxW='406px' w='100%' mx='auto' border='1px solid #8AABED' mb='20px' px='20px' py='15px' boxShadow='0px 5px 0px #215ED7'>
                         <Image w='100%' maxH='250px' src={card.packageImage} />
                         <Text fontSize='32px'>{card.packageName}</Text>
                         <Flex gap='16px' justifyContent='end' mt='30px'>
-                            <Link href='packages/details'>
-                                <Button variant='outline' borderColor='black' fontSize='16px' fontWeight='normal' borderRadius="30px">
-                                    Details
-                                </Button>
-                            </Link>
+                            <Button variant='outline' borderColor='black' fontSize='16px' fontWeight='normal' borderRadius="30px" onClick={() => setPathname('/packages-details')}>
+                                Details
+                            </Button>
                             <Button border='none' color='white' bg='#05A41F' fontSize='16px' fontWeight='normal' borderRadius="30px">
                                 Upgrade
                             </Button>
