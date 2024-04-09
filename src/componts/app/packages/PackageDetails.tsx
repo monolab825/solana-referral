@@ -5,7 +5,7 @@ import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
 import idl from "@/constants/idl_3.json"; // Adjust the path to your IDL file
 
-const programID = new PublicKey("HsFCZjdts1dVYRSNFAWUhCkpgDAPjwrXoKrwZ14okSaX");
+const programID = new PublicKey("G2ctmoDFNnYFcwdqotLTzmHBTNAcjAuTRFmhpBDAbbpT");
 const network = "https://api.devnet.solana.com";
 
 const PackageDetails = () => {
@@ -29,7 +29,7 @@ const PackageDetails = () => {
     const lpWallet = new PublicKey("83gXjhETa3nDGxVZHYMrBQuiN4SRzvjnxD1DPUsb1Vnk");
 
     try {
-      await program.methods
+      const response = await program.methods
         .purchasePackage()
         .accounts({
           user: provider.wallet.publicKey,
@@ -46,8 +46,10 @@ const PackageDetails = () => {
         .signers([])
         .rpc();
 
+      console.log(response);
       console.log("purchase_package function called successfully.");
     } catch (error) {
+
       console.error("Error calling purchase_package:", error);
     }
   }
