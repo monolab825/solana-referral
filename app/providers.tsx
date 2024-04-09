@@ -7,6 +7,7 @@ import { ConnectionProvider } from "@solana/wallet-adapter-react";
 import { clusterApiUrl } from "@solana/web3.js";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { useMemo, useState } from "react";
+import "./walletModal.css";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const endpoint = useMemo(() => clusterApiUrl("devnet"), []);
@@ -17,7 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ChakraProvider>
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
-          <WalletModalProvider>{children}</WalletModalProvider>
+          <WalletModalProvider className="custom-wallet-modal" >{children}</WalletModalProvider>
         </WalletProvider>
       </ConnectionProvider>
     </ChakraProvider>
