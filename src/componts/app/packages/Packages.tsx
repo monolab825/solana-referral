@@ -25,14 +25,14 @@ const Packages = ({ setPathname }: any) => {
                     </Box>
                 </Flex>
             </Box>
-            <Text fontSize='32px' mt='25px' mb='8px'>
+            <Text fontSize={{ base: '26px', sm: '32px' }} mt='25px' mb='8px'>
                 Packages
             </Text>
             <Box display='flex' flexWrap='wrap' gap='30px'>
                 {packageCards.map((card) =>
-                    <Box maxW='406px' w='100%' mx='auto' border='1px solid #8AABED' mb='20px' px='20px' py='15px' boxShadow='0px 5px 0px #215ED7'>
+                    <Box maxW='406px' w='100%' mx='auto' border='1px solid #8AABED' mb='20px' px={{ base: '10px', sm: '20px' }} py='15px' boxShadow='0px 5px 0px #215ED7'>
                         <Image w='100%' maxH='250px' src={card.packageImage} />
-                        <Text fontSize='32px'>{card.packageName}</Text>
+                        <Text fontSize={{ base: '26px', sm: '32px' }}>{card.packageName}</Text>
                         <Flex gap='16px' justifyContent='end' mt='30px'>
                             <Button variant='outline' borderColor='black' fontSize='16px' fontWeight='normal' borderRadius="30px" onClick={() => setPathname('/packages-details')}>
                                 Details

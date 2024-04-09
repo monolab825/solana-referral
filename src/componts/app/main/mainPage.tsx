@@ -65,7 +65,7 @@ const MainPage = () => {
 
 
             <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalContent maxW={fullScreen ? '100%' : '1724px'} maxH={fullScreen ? '100%' : '86%'} m={fullScreen ? '0' : '30px'} overflowY='auto' borderRadius='none' sx={scrollbarHideStyles}>
+                <ModalContent maxW={fullScreen ? '100%' : '1724px'} maxH={fullScreen ? '100%' : '86%'} m={fullScreen ? '0' : '20px'} overflowY='auto' borderRadius='none' sx={scrollbarHideStyles}>
 
                     <Modal isOpen={isLogInOpen} onClose={onLogInClose} >
                         <ModalOverlay bg="blackAlpha.700" />
@@ -109,39 +109,42 @@ const MainPage = () => {
                         position='relative'
                     >
                         <Box position='sticky' top='0' h='50px' border='3px solid black' zIndex={99}>
-                            <Flex alignItems='center' bg='#D9D9D9' h='44px' p='3px' gap='14px'>
-                                <Box p='5px' bg='white' cursor='pointer'>
-                                    <Image src='https://i.ibb.co/4mzQdz8/Group-91.png' alt='img' />
+                            <Flex alignItems='center' bg='#D9D9D9' h='44px' p={{ base: '1px', sm: '3px' }} gap={{ base: '7px', md: '14px' }}>
+                                <Box p={{ base: '2px', sm: '5px' }} bg='white' cursor='pointer'>
+                                    <Image minW='20px' src='https://i.ibb.co/4mzQdz8/Group-91.png' alt='img' />
                                 </Box>
                                 <Flex bg='#353590' h='100%' w='100%' border='2px solid #AFAFAF' alignItems='center'>
-                                    <Text color='white' fontSize='16px' ml='14px'>https://solana-referral.vercel.app{pathname}</Text>
+                                    <Text color='white' whiteSpace='nowrap' fontSize={{ base: '12px', md: '16px' }} ml={{ base: '7px', md: '14px' }} w={{ base: '150px', sm: '100%' }} overflowX='auto'>https://solana-referral.vercel.app{pathname}</Text>
                                 </Flex>
-                                <Flex gap='6px'>
-                                    <Flex h='100%' w='33px' p='5px' border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' onClick={onClose} cursor='pointer'>
+                                <Flex gap={{ base: '3px', sm: '6px' }}>
+                                    <Flex h='100%' w={{ base: '30px', sm: '33px' }} p={{ base: '3px', sm: '5px' }} border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' onClick={onClose} cursor='pointer'>
                                         <FaWindowMinimize />
                                     </Flex>
                                     {fullScreen ?
-                                        <Flex h='100%' w='33px' p='5px' border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' cursor='pointer' onClick={() => setFullScreen(false)}>
+                                        <Flex h='100%' w={{ base: '30px', sm: '33px' }} p={{ base: '3px', sm: '5px' }} border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' cursor='pointer' onClick={() => setFullScreen(false)}>
                                             <FaRegWindowMaximize />
                                         </Flex>
                                         :
-                                        <Flex h='100%' w='33px' p='5px' border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' cursor='pointer' onClick={() => setFullScreen(true)}>
+                                        <Flex h='100%' w={{ base: '30px', sm: '33px' }} p={{ base: '3px', sm: '5px' }} border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' cursor='pointer' onClick={() => setFullScreen(true)}>
                                             <FaRegWindowMaximize />
                                         </Flex>}
-                                    <Flex h='100%' w='31px' p='2px' border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' onClick={openModalClose} cursor='pointer'>
+                                    <Flex h='100%' w='31px' p={{ base: '0', sm: '2px' }} border='2px solid black' borderLeft='2px solid white' borderTop='2px solid #C0C0C0' textAlign='center' onClick={openModalClose} cursor='pointer'>
                                         <IoClose fontSize='24px' />
                                     </Flex>
                                 </Flex>
                             </Flex>
                         </Box>
-                        <Box border='16px solid #D9D9D9' borderTop='none'>
-                            <Navbar {...{ pathname }} />
+                        <Box
+                            borderX={{ base: '8px solid #D9D9D9', md: '16px solid #D9D9D9' }}
+                            borderBottom={{ base: '8px solid #D9D9D9', md: '16px solid #D9D9D9' }}
+                        >
+                            <Navbar {...{ pathname, setPathname }} />
                             <Box>
-                                <Grid templateColumns="332px 1fr" >
-                                    <Box w='100%' maxW='332px' bg='#F5F5F5' pt='25px'>
+                                <Grid templateColumns={{ base: 'auto', xl: "332px 1fr" }} >
+                                    <Box w='100%' maxW='332px' bg='#F5F5F5' pt='25px' display={{ base: 'none', xl: 'block' }}>
                                         <Sidebar {...{ pathname, setPathname }} />
                                     </Box>
-                                    <Box p='20px'>
+                                    <Box px={{ base: '6px', md: '20px' }} py='20px'>
                                         {pathname === '/' && <HomeIndex />}
                                         {pathname === '/referral-activity' && <ReferralActivity />}
                                         {pathname === '/packages' && <Packages {...{ setPathname }} />}
@@ -162,9 +165,21 @@ const MainPage = () => {
                 <Flex w='100%'>
                     <Image src='https://i.ibb.co/VMhVHDw/image-53.png' cursor='pointer' onClick={isStartOpen ? onStartClose : onStartOpen} />
                     {showCase &&
-                        <Flex h='100%' maxW='300px' w='100%' border='2px solid white' borderLeft='2px solid #7F787F' borderTop='2px solid #7F787F' textAlign='center' cursor='pointer' onClick={isOpen ? onClose : onOpen} alignItems='center' px='10px' gap='5px'>
+                        <Flex
+                            h='100%'
+                            maxW='300px'
+                            w='100%'
+                            border='2px solid white'
+                            borderLeft='2px solid #7F787F'
+                            borderTop='2px solid #7F787F'
+                            textAlign='center'
+                            cursor='pointer'
+                            px={{ base: '4px', md: '10px' }}
+                            gap='5px'
+                            onClick={isOpen ? onClose : onOpen}
+                        >
                             <Image display='inline' w='30px' src='https://i.ibb.co/qysKfQ3/image-64-removebg-preview.png' />
-                            <Text fontSize='18px' py='6px'>Solana Referral</Text>
+                            <Text fontSize={{ base: '14', md: '18px' }} py='6px' whiteSpace='nowrap'>Solana Referral</Text>
                         </Flex>
                     }
                 </Flex>

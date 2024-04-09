@@ -7,7 +7,7 @@ const HomeIndex = () => {
 
     return (
 
-        <Box display='flex' gap='30px'>
+        <Box display={{ base: 'block', md: 'flex' }} gap={{ base: '15px', xl: '30px' }}>
             <TotalReferredSection />
             <Box w='100%'>
                 <HomeReuseCard cardTitle='SOL Balance' amount='0.00' rate='~$0.00' />

@@ -1,5 +1,6 @@
+import { Box } from '@chakra-ui/react';
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, CartesianGrid, Tooltip, ResponsiveContainer, } from 'recharts';
 
 const ReferralChart = () => {
 
@@ -19,24 +20,24 @@ const ReferralChart = () => {
     ];
 
     return (
-        <div>
-            <BarChart
-                width={600}
-                height={300}
-                data={earningsData}
-                margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <Tooltip />
-                <Bar dataKey="earnings" fill="black" />
-            </BarChart>
-        </div>
+        <Box w='100%' maxW={{ base: 'auto', md: '100%', }}>
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                    data={earningsData}
+                // margin={{
+                //   top: 20,
+                //   right: 30,
+                //   left: 20,
+                //   bottom: 5,
+                // }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <Tooltip />
+                    <Bar dataKey="earnings" fill="black" />
+                </BarChart>
+            </ResponsiveContainer>
+        </Box>
     );
 };
 
