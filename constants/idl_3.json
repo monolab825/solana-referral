@@ -1,0 +1,44 @@
+{
+    "version": "0.1.0",
+    "name": "referral_program",
+    "instructions": [
+        {
+            "name": "purchasePackage",
+            "accounts": [
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "lpWallet",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "AmountTooLow",
+            "msg": "The paid amount is too low. The minimum required is 0.5 SOL."
+        },
+        {
+            "code": 6001,
+            "name": "ReceiverNotWritable",
+            "msg": "The receiver account is not writable."
+        },
+        {
+            "code": 6002,
+            "name": "InvalidAccount",
+            "msg": "Invalid account provided."
+        }
+    ]
+}
