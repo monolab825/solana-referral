@@ -25,7 +25,9 @@ const HomeIndex = ({onLogInOpen, setPathname, user, setUser}: any) => {
     }
 
     console.log(userData);
-    setUser(userData);
+    setUser(userData);  
+    localStorage.setItem("access_token", userData.accessToken);
+
 
     if(userData.package_id !== 0) {
       switch(userData.package_id) {

@@ -87,3 +87,31 @@ export async function purchasePackage(access_token: any, package_id: any, packag
         return error;
       }
 } 
+
+export async function fetchPurchaseEvent (txHash: any, connection: any, program: any) {
+    try {
+      // Fetch the transaction details
+      const tx = await connection.getTransaction(txHash);
+      console.log(tx);
+  
+      // Assuming the event is in the first log message; adjust if necessary
+      const log = tx.meta.logMessages.find((message: any) => message.startsWith('Program log: '));
+    
+      console.log({log})
+      if (!log) {
+        console.log('No log found in the transaction');
+        return;
+      }
+  
+      // Extract the base-64 encoded string
+      const base64Data = log.split('Program log: ')[1];
+  
+      // Decode the event data
+      const eventData = program.coder.events.decode('PurchaseEvent', base64Data);
+  
+      console.log('Event data:', eventData);
+    } catch (error) {
+      console.error('Error fetching the event:', error);
+    }
+  };
+  

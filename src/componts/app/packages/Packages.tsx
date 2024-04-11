@@ -10,7 +10,8 @@ import {
 import { Program, AnchorProvider, web3, BN } from "@project-serum/anchor";
 import IDL from "@/constants/idl_4.json"; // Adjust the path to your IDL file
 import NETWORK from "@/constants/networkConfig.json";
-import { getReferralUplinks, purchasePackage } from "@/src/helpers/apis";
+import { fetchPurchaseEvent, getReferralUplinks, purchasePackage } from "@/src/helpers/apis";
+import { fetchSolPrice } from "@/src/helpers/miscellaneous";
 
 const programID = new PublicKey(NETWORK.smart_contract);
 const network = NETWORK.network;
@@ -106,6 +107,7 @@ const Packages = ({ setPathname, setDisplayPackage, setShowReferralTab, setUser 
       const founder = new PublicKey(NETWORK.founder_wallet);
 
 
+
       const listener = program.addEventListener(
         "PurchaseEvent",
         async (event, slot) => {
@@ -118,13 +120,18 @@ const Packages = ({ setPathname, setDisplayPackage, setShowReferralTab, setUser 
             
           } else {
             // store referrals, commissions, credits coming from event or slot
+            console.log(event.referrals);
+
+            referrals = event.referrals.map((ref: any) => ref.pubkey.toString());
+            commissions = event.referrals.map((ref: any) => ref.payableCommission.toNumber()/LAMPORTS_PER_SOL)
+            credits = event.referrals.map((ref: any) => ref.credit.toNumber()/LAMPORTS_PER_SOL); // default credits multiplier is 50x
           }
 
           let access_token = localStorage.getItem("access_token") || null;
           purchasePackage(access_token, package_id, package_price, referrals, commissions, credits).then((res: any) => {
             console.log(res)
             setShowReferralTab(true);
-            setUser((prev: any) => ({...prev, referralCode: res.data.referralCode}))
+            // setUser((prev: any) => ({...prev, referralCode: res.data.referralCode}))
           }).catch((err: any) => {console.log(err)})
 
         }
@@ -153,6 +160,7 @@ const Packages = ({ setPathname, setDisplayPackage, setShowReferralTab, setUser 
           .rpc();
 
         console.log({ response });
+        // console.log()
         console.log("purchase_package function called successfully.");
       } catch (error) {
         console.error("Error calling purchase_package:", error);

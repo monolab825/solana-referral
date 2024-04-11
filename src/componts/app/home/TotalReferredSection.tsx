@@ -25,7 +25,7 @@ const TotalReferredSection = ({referralCode}: any) => {
                 </Box>
 
             </Box>
-            {referralCode !== "" && <Flex>
+            {referralCode !== "" && referralCode !== "no-code" && <Flex>
                 <Box fontSize={{lg: "14px"}} p="10px 5px" border={"1px solid blue"} width={"90%"} >
                     <Text>{NETWORK.frontend_endpoint}/{referralCode}</Text>
                 </Box>
