@@ -1,17 +1,23 @@
 import React from "react";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Connection, PublicKey, Transaction } from "@solana/web3.js";
-import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
-import idl from "@/constants/idl_3.json"; // Adjust the path to your IDL file
+import { Connection, PublicKey, Transaction, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { Program, AnchorProvider, web3, BN } from "@project-serum/anchor";
+import NETWORK from "@/constants/networkConfig.json";
+import IDL from "@/constants/idl_4.json"; // Adjust the path to your IDL file
 
-const programID = new PublicKey("G2ctmoDFNnYFcwdqotLTzmHBTNAcjAuTRFmhpBDAbbpT");
-const network = "https://api.devnet.solana.com";
+const programID = new PublicKey(NETWORK.smart_contract);
+const network = NETWORK.network;
 
-const PackageDetails = () => {
+const PackageDetails = ({ displayPackage }: any) => {
   const wallet: any = useWallet();
+  const idl: any = IDL;
 
-  async function callPurchasePackage(remainingAccounts: any) {
+  async function callPurchasePackage( package_id: any, package_price: any) {
+    // integrate api here to call /get-referral-uplinks
+    const referrals = ["7h7rhCPzaFFJBJ4zScfMGXPCiNctJXejNaQSeDDbkoBa", "22gbQiUoDqcyp2jPBtrewBVT5axX4vm1PFpXfc9AzXRC"];
+    const commissions: any = [new BN(10), new BN(10)];;
+
     if (!wallet.connected) {
       console.log("Wallet is not connected!");
       return;
@@ -23,21 +29,26 @@ const PackageDetails = () => {
     });
 
     const program = new Program(idl, programID, provider);
+    const lpWallet = new PublicKey(NETWORK.lp_wallet);
+    const founder = new PublicKey(NETWORK.founder_wallet);
 
-    // Replace these with the actual public keys
-    // const founder = new PublicKey("Founder_Public_Key");
-    const lpWallet = new PublicKey("83gXjhETa3nDGxVZHYMrBQuiN4SRzvjnxD1DPUsb1Vnk");
+    const listener = program.addEventListener('PurchaseEvent', (event, slot) => {
+        console.log('Purchase event:', event);
+        console.log('Slot:', slot);
+        // call purchase-package api here
+    });
 
     try {
       const response = await program.methods
-        .purchasePackage()
+        .purchasePackage(new BN(package_price * LAMPORTS_PER_SOL), commissions)
         .accounts({
           user: provider.wallet.publicKey,
           lpWallet: lpWallet,
+          founder: founder,
           systemProgram: web3.SystemProgram.programId,
         })
         .remainingAccounts(
-          remainingAccounts.map((key: any) => ({
+          referrals.map((key: any) => ({
             pubkey: new PublicKey(key),
             isWritable: true,
             isSigner: false,
@@ -46,80 +57,52 @@ const PackageDetails = () => {
         .signers([])
         .rpc();
 
-      console.log(response);
+      console.log({response});
       console.log("purchase_package function called successfully.");
     } catch (error) {
 
       console.error("Error calling purchase_package:", error);
+    } finally {
+        // Remove listener after the transaction is confirmed
+        program.removeEventListener(listener);
     }
   }
 
   return (
     <Box>
       <Text fontSize="32px">Packages details</Text>
-      <Box p="15px" bg="#f5f5f5">
-        <Image
-          w="100%"
-          maxH="366px"
-          src="https://i.ibb.co/9HM56Zb/Rectangle-66.png"
-        />
-      </Box>
-      <Text fontSize="32px" mt="50px" mb="20px">
-        EMERALD plan
-      </Text>
-      <Text fontSize="16px">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Text>
-      <Text fontSize="16px" mt="30px">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum.
-      </Text>
-      <Text fontSize="32px" mt="30px" mb="20px">
-        Price: 10 SOL
-      </Text>
-      <Text fontSize="16px">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Text>
-      <Flex gap="16px" justifyContent="end" mt="30px">
-        <Button
-          border="none"
-          color="white"
-          bg="#05A41F"
-          fontSize="16px"
-          fontWeight="normal"
-          borderRadius="30px"
-          onClick={async () => {
-            await callPurchasePackage([
-              "8Z9igxEnBWifbFsdmRYfBQVgpFGRLUDoHEZ8LD558ueR",
-              "6ABRd6Ja9RXCMfou7xLdSq4RqvQumtqqUq5SqanDgiw",
-            ]);
-          }}
-        >
-          BUY
-        </Button>
+      <Flex>
+        <Box p="15px" width={"50%"}>
+          <Image
+            w="100%"
+            maxH="366px"
+            src={displayPackage.image}
+          />
+        </Box>
+        <Box width={"50%"}>
+          <Text fontSize="32px" mb="20px">
+            {displayPackage?.name} plan
+          </Text>
+          <Text fontSize="16px">{displayPackage?.description}</Text>
+          <Flex gap="16px" justifyContent="space-between" alignContent={"center"} mt="30px">
+          <Text fontSize="32px" mb="20px">
+            Price: {displayPackage?.price} SOL
+          </Text>
+            <Button
+              border="none"
+              color="white"
+              bg="#05A41F"
+              fontSize="16px"
+              fontWeight="normal"
+              borderRadius="30px"
+              onClick={async () => {
+                await callPurchasePackage(displayPackage.id, displayPackage.price);
+              }}
+            >
+              BUY
+            </Button>
+          </Flex>
+        </Box>
       </Flex>
     </Box>
   );

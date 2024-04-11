@@ -21,6 +21,11 @@ const MainPage = () => {
     const [fullScreen, setFullScreen] = useState(false)
     const [pathname, setPathname] = useState('/')
     const [showCase, setShowCase] = useState(false)
+    const [displayPackage, setDisplayPackage]: any = useState({
+        name: "",
+        price: 0,
+        description: ""
+    });
 
     useEffect(() => {
         onLogInOpen();
@@ -147,8 +152,8 @@ const MainPage = () => {
                                     <Box px={{ base: '6px', md: '20px' }} py='20px'>
                                         {pathname === '/' && <HomeIndex />}
                                         {pathname === '/referral-activity' && <ReferralActivity />}
-                                        {pathname === '/packages' && <Packages {...{ setPathname }} />}
-                                        {pathname === '/packages-details' && <PackageDetails />}
+                                        {pathname === '/packages' && <Packages {...{ setPathname, setDisplayPackage }} />}
+                                        {pathname === '/packages-details' && <PackageDetails displayPackage={displayPackage}  />}
                                         {pathname === '/credits' && <Credits />}
                                     </Box>
                                 </Grid>
