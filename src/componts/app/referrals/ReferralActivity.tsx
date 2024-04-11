@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import CreditsTable from '../credits/CreditsTable';
 import { FaRegCircleCheck } from "react-icons/fa6";
 import ReferralChart from './ReferralChart';
+import TreeChart from '../../core/tree/treeview';
 
 const ReferralActivity = () => {
     const [copySuccess, setCopySuccess] = useState(false);
@@ -26,18 +27,33 @@ const ReferralActivity = () => {
             setCopySuccess(false);
         }, 2000)
     }
-
+    const data = [
+        { "name": "Level 2: A", "parent": "Top Level" },
+        { "name": "Top Level" }, // parent is implicitly null
+        { "name": "Son of A", "parent": "Level 2: A" },
+        { "name": "Daughter of A", "parent": "Level 2: A" },
+        { "name": "Daughter of A", "parent": "Level 2: A" },
+        { "name": "Level 3: d", "parent": "Son of A" },
+        { "name": "Level 3: d", "parent": "Son of A" },
+        { "name": "Level 3: 3", "parent": "Son of A" },
+        { "name": "Level 3: 32", "parent": "Level 3: 3" },
+        { "name": "Level 3: d", "parent": "Son of A" },
+        { "name": "Level 3: 21", "parent": "Son of A" },
+        { "name": "Level 2: B", "parent": "Top Level" },
+        { "name": "Level 2: B", "parent": "Top Level" },
+        { "name": "Level 2: B", "parent": "Top Level" }
+    ];
     return (
         <Box>
-            <Flex display='flex' flexDirection={{ base: 'column-reverse', '2xl': 'row' }} gap='20px'>
-                <Box border='1px solid #8AABED' boxShadow='0px 5px 0px #215ED7' p={{ base: '15px', md: '30px' }} mb={{ base: '20px', sm: '40px' }}>
-                    <Flex alignItems='center' gap='12px' pb='20px' borderBottom='1px solid #8AABED80'>
+            <Flex display='flex' w='100%' flexDirection={{ base: 'column-reverse', '2xl': 'row' }} gap='20px'>
+                <Box w='100%' border='1px solid #8AABED' boxShadow='0px 5px 0px #215ED7' p={{ base: '15px', md: '30px' }} mb={{ base: '20px', sm: '40px' }}>
+                    <Flex w='100%' alignItems='center' gap='12px' pb='20px' borderBottom='1px solid #8AABED80'>
                         <Image src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt='img' w='32px' h='32px' />
                         <Text fontSize='24px'>
                             Earnings
                         </Text>
                     </Flex>
-                    <Flex display={{ base: 'block', md: 'flex' }} my='10px' justifyContent='space-between'>
+                    <Flex w='100%' display={{ base: 'block', md: 'flex' }} my='10px' justifyContent='space-between'>
                         <Text fontSize={{ base: '14px', sm: '16px' }} >
                             Total Referred $1004.00
                         </Text>
@@ -108,6 +124,17 @@ const ReferralActivity = () => {
                 </Flex>
                 <Box >
                     <CreditsTable />
+                </Box>
+            </Box>
+            <Box w='100%' border='1px solid #8AABED' p={{ base: '15px', md: '30px' }} mb='40px' >
+                <Flex alignItems='center' gap='12px' mb='20px'>
+                    <Image src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png' alt='img' w='32px' h='32px' />
+                    <Text fontSize={{ base: '20px', sm: '24px' }}>
+                        My referrals
+                    </Text>
+                </Flex>
+                <Box >
+                    <TreeChart data={data} />
                 </Box>
             </Box>
             <Box border='1px solid #8AABED' p={{ base: '15px', md: '30px' }} mb='40px' fontSize={{ base: '14px', sm: '16px' }}>

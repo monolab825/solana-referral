@@ -12,7 +12,6 @@ import Credits from '../credits/Credits';
 import PackageDetails from '../packages/PackageDetails';
 import Timer from '../../core/timer';
 import ShutDownModal from '../../core/shutDownModal';
-import TreeChart from '../../core/tree/treeview';
 
 const MainPage = () => {
 
@@ -45,21 +44,7 @@ const MainPage = () => {
         'scrollbar-width': 'none',
     };
 
-    const data = [
-        { "name": "Level 2: A", "parent": "Top Level" },
-        { "name": "Top Level" }, // parent is implicitly null
-        { "name": "Son of A", "parent": "Level 2: A" },
-        { "name": "Daughter of A", "parent": "Level 2: A" },
-        { "name": "Daughter of A", "parent": "Level 2: A" },
-        { "name": "Level 3: d", "parent": "Son of A" },
-        { "name": "Level 3: d", "parent": "Son of A" },
-        { "name": "Level 3: 3", "parent": "Son of A" },
-        { "name": "Level 3: 32", "parent": "Level 3: 3" },
-        { "name": "Level 3: d", "parent": "Son of A" },
-        { "name": "Level 2: B", "parent": "Top Level" },
-        { "name": "Level 2: B", "parent": "Top Level" },
-        { "name": "Level 2: B", "parent": "Top Level" }
-    ];
+
     return (
         <Box>
             <Box maxW='92px' ml='20px' mt='20px'>
@@ -161,7 +146,6 @@ const MainPage = () => {
                                         <Sidebar {...{ pathname, setPathname }} />
                                     </Box>
                                     <Box px={{ base: '6px', md: '20px' }} py='20px'>
-                                        <TreeChart data={data} />
                                         {pathname === '/' && <HomeIndex />}
                                         {pathname === '/referral-activity' && <ReferralActivity />}
                                         {pathname === '/packages' && <Packages {...{ setPathname }} />}
