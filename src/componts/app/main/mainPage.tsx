@@ -162,7 +162,7 @@ const MainPage = () => {
 
             <ShutDownModal {...{ isStartOpen, onStartClose, openModalClose }} />
 
-            <Flex w='100%' h='40px' bg='#A0A0A0' position='fixed' bottom='0' >
+            <Flex w='100%' h='40px' bg='#A0A0A0' position='fixed' bottom='0' zIndex={1500}>
                 <Flex w='100%'>
                     <Image src='https://i.ibb.co/VMhVHDw/image-53.png' cursor='pointer' onClick={isStartOpen ? onStartClose : onStartOpen} />
                     {showCase &&

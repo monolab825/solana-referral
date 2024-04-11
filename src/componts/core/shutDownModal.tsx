@@ -19,7 +19,7 @@ const ShutDownModal = ({ isStartOpen, onStartClose, openModalClose }: any) => {
                                 writingMode: 'tb-rl',
                             }}
                         >
-                            HeffernanOS
+                            SOLANA REFERRAL
                         </Text>
                     </Box>
                     <Flex alignItems='center' p='6px' borderTop='1px solid rgb(134, 137, 141)' w='100%' cursor='pointer' onClick={() => { openModalClose(), onStartClose() }}>

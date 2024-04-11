@@ -11,13 +11,6 @@ import { IoHome } from 'react-icons/io5';
 const Navbar = ({ pathname, setPathname }: any) => {
     const { wallet, connect, disconnect, select } = useWallet();
     const { isOpen, onOpen, onClose } = useDisclosure()
-    useEffect(() => {
-        autoConnect()
-    }, [])
-
-    const autoConnect = async () => {
-        console.log(wallet);
-    }
 
     const handleConnect = async () => {
         console.log(wallet);
