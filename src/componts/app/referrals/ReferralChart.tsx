@@ -20,7 +20,7 @@ const ReferralChart = () => {
     ];
 
     return (
-        <Box w='100%' maxW={{ base: 'auto', md: '100%', }}>
+        <Box w='100%'>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart
                     data={earningsData}
