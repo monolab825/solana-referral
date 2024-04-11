@@ -49,6 +49,7 @@ const MainPage = () => {
         'scrollbar-width': 'none',
     };
 
+
     return (
         <Box>
             <Box maxW='92px' ml='20px' mt='20px'>
