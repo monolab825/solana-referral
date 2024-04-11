@@ -12,23 +12,42 @@ import Credits from '../credits/Credits';
 import PackageDetails from '../packages/PackageDetails';
 import Timer from '../../core/timer';
 import ShutDownModal from '../../core/shutDownModal';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { registerUser } from '@/src/helpers/apis';
 
 const MainPage = () => {
-
+    const wallet = useWallet();
     const { isOpen: isLogInOpen, onOpen: onLogInOpen, onClose: onLogInClose } = useDisclosure();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { isOpen: isStartOpen, onOpen: onStartOpen, onClose: onStartClose } = useDisclosure();
     const [fullScreen, setFullScreen] = useState(false)
     const [pathname, setPathname] = useState('/')
     const [showCase, setShowCase] = useState(false)
+    const [showReferralTab, setShowReferralTab] = useState(false);
+    const [registerUserObj, setRegisterUserObj] = useState({
+        name: "",
+        email: "",
+        referralCode: ""
+    })
     const [displayPackage, setDisplayPackage]: any = useState({
         name: "",
         price: 0,
         description: ""
     });
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        referralCode: "",
+        package_id: 0,
+        commission: 0,
+        credits: 0,
+        totalReferred: 0,
+        totalUserUnderMe: 0
+      })
+
 
     useEffect(() => {
-        onLogInOpen();
+        // onLogInOpen();
         onOpen();
         setShowCase(true)
     }, []);
@@ -48,6 +67,17 @@ const MainPage = () => {
         '-ms-overflow-style': 'none',
         'scrollbar-width': 'none',
     };
+
+    const callRegisterUser = async () => {
+        const { name, email, referralCode} = registerUserObj;
+        const walletAddress = wallet?.publicKey?.toString();
+        const response: any = await registerUser(name, email, referralCode, walletAddress);
+        
+        if(response?.status == 200) {
+            localStorage.setItem("access_token", response.data.access_token);
+            onLogInClose();
+        }
+    }
 
 
     return (
@@ -89,19 +119,25 @@ const MainPage = () => {
                                     <Text fontSize='24px' color='#162079' textTransform='uppercase' mb='10px'>Create an Account</Text>
 
                                     <Text fontSize='18px' color='#303C55' mb='10px'>Name</Text>
-                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='20px' />
+                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='20px' onChange={(e: any) => {
+                                        setRegisterUserObj((prev) => ({...prev, name: e.target.value}))
+                                    }} />
 
                                     <Text fontSize='18px' color='#303C55' mb='10px'>Email</Text>
-                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='20px' />
+                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='20px' onChange={(e: any) => {
+                                        setRegisterUserObj((prev) => ({...prev, email: e.target.value}))
+                                    }} />
 
                                     <Text fontSize='18px' color='#303C55' mb='10px'>Referral ID (optional)</Text>
-                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='30px' />
+                                    <Input p='10px' h='58px' border='1px solid #304F8E' borderRadius='none' mb='30px' onChange={(e: any) => {
+                                        setRegisterUserObj((prev) => ({...prev, referralCode: e.target.value}))
+                                    }} />
 
                                     <Flex gap='16px' justifyContent='end' >
                                         <Button variant='outline' color='#303C55' borderColor='black' fontSize='16px' fontWeight='normal' borderRadius="30px" onClick={onLogInClose}>
                                             Cancel
                                         </Button>
-                                        <Button border='none' color='white' bg='#215ED7' fontSize='16px' fontWeight='normal' borderRadius="30px">
+                                        <Button border='none' color='white' bg='#215ED7' fontSize='16px' fontWeight='normal' borderRadius="30px" onClick={callRegisterUser}>
                                             Create
                                         </Button>
                                     </Flex>
@@ -144,16 +180,16 @@ const MainPage = () => {
                             borderX={{ base: '8px solid #D9D9D9', md: '16px solid #D9D9D9' }}
                             borderBottom={{ base: '8px solid #D9D9D9', md: '16px solid #D9D9D9' }}
                         >
-                            <Navbar {...{ pathname, setPathname }} />
+                            <Navbar {...{ pathname, setPathname, showReferralTab }} />
                             <Box>
                                 <Grid templateColumns={{ base: 'auto', xl: "332px 1fr" }} >
                                     <Box w='100%' maxW='332px' bg='#F5F5F5' pt='25px' display={{ base: 'none', xl: 'block' }}>
-                                        <Sidebar {...{ pathname, setPathname }} />
+                                        <Sidebar {...{ pathname, setPathname, showReferralTab }} />
                                     </Box>
                                     <Box px={{ base: '6px', md: '20px' }} py='20px'>
-                                        {pathname === '/' && <HomeIndex />}
+                                        {pathname === '/' && <HomeIndex setPathname={setPathname} onLogInOpen={onLogInOpen} user={user} setUser={setUser} />}
                                         {pathname === '/referral-activity' && <ReferralActivity />}
-                                        {pathname === '/packages' && <Packages {...{ setPathname, setDisplayPackage }} />}
+                                        {pathname === '/packages' && <Packages {...{ setPathname, setDisplayPackage, setShowReferralTab, setUser }} />}
                                         {pathname === '/packages-details' && <PackageDetails displayPackage={displayPackage}  />}
                                         {pathname === '/credits' && <Credits />}
                                     </Box>

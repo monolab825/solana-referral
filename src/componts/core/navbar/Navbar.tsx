@@ -8,7 +8,7 @@ import { TbPackages } from 'react-icons/tb';
 import { LuLineChart } from 'react-icons/lu';
 import { IoHome } from 'react-icons/io5';
 
-const Navbar = ({ pathname, setPathname }: any) => {
+const Navbar = ({ pathname, setPathname , showReferralTab }: any) => {
     const { wallet, connect, disconnect, select } = useWallet();
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -96,7 +96,7 @@ const Navbar = ({ pathname, setPathname }: any) => {
                                 HOME
                             </Text>
                         </Box>
-                        <Box
+                        {showReferralTab && <Box
                             display='flex'
                             alignItems='center'
                             pl='40px'
@@ -115,7 +115,7 @@ const Navbar = ({ pathname, setPathname }: any) => {
                             <Text fontSize='20px' textTransform='uppercase' fontWeight='normal'>
                                 Referrals Activity
                             </Text>
-                        </Box>
+                        </Box>}
                         <Box
                             display='flex'
                             alignItems='center'

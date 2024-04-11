@@ -20,6 +20,7 @@
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
     "@solana/wallet-adapter-wallets": "^0.19.32",
+    "axios": "^1.6.8",
     "d3": "^7.9.0",
     "framer-motion": "^11.0.18",
     "next": "14.1.4",

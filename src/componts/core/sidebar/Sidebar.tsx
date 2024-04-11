@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-const Sidebar = ({ pathname, setPathname }: any) => {
+const Sidebar = ({ pathname, setPathname, showReferralTab }: any) => {
 
     return (
         <>
@@ -32,7 +32,7 @@ const Sidebar = ({ pathname, setPathname }: any) => {
                     HOME
                 </Text>
             </Box>
-            <Box
+            {showReferralTab && <Box
                 display='flex'
                 alignItems='center'
                 pl='40px'
@@ -51,7 +51,7 @@ const Sidebar = ({ pathname, setPathname }: any) => {
                 <Text fontSize='20px' textTransform='uppercase' fontWeight='normal'>
                     Referrals Activity
                 </Text>
-            </Box>
+            </Box>}
             <Box
                 display='flex'
                 alignItems='center'

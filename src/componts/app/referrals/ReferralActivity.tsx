@@ -40,8 +40,9 @@ const ReferralActivity = () => {
         { "name": "Level 3: d", "parent": "Son of A" },
         { "name": "Level 3: 21", "parent": "Son of A" },
         { "name": "Level 2: B", "parent": "Top Level" },
-        { "name": "Level 2: B", "parent": "Top Level" },
-        { "name": "Level 2: B", "parent": "Top Level" }
+        { "name": "Daughter of B", "parent": "Level 2: B" },
+        { "name": "Daughter of B", "parent": "Level 2: B" },
+        { "name": "Son of B", "parent": "Level 2: B" }
     ];
     return (
         <Box>
